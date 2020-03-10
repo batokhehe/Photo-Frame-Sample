@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -78,7 +77,6 @@
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -105,8 +103,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:adjustViewBounds="true"
-                android:src="@drawable/frame" />
+                android:adjustViewBounds="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:text="FOR TESTING PURPOSE"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:alpha="0.7"/>
 
             <View
                 android:id="@+id/dummy_view"
@@ -144,7 +151,6 @@
         android:paddingStart="10dp"
         android:text="BACK"
         android:textColor="@android:color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -161,7 +167,6 @@
         android:paddingEnd="10dp"
         android:text="CONTINUE"
         android:textColor="@android:color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

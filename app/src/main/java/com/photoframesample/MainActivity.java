@@ -77,36 +77,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle(null);
+        try {
+            setContentView(R.layout.activity_main);
+            ButterKnife.bind(this);
+            loadProfileDefault();
+            setFormLayout(true);
 
-        loadProfileDefault();
-        setFormLayout(true);
-
-        // Clearing older images from cache directory
-        // don't call this line if you want to choose multiple images in the same activity
-        // call this once the bitmap(s) usage is over
-        ImagePickerActivity.clearCache(this);
+            // Clearing older images from cache directory
+            // don't call this line if you want to choose multiple images in the same activity
+            // call this once the bitmap(s) usage is over
+            ImagePickerActivity.clearCache(this);
+        } catch (OutOfMemoryError E) {
+            // release some (all) of the above objects
+            Toast.makeText(this, "Out of Memory.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadProfile(String url) {
         Log.d(TAG, "Image cache path: " + url);
-
-//        imgPlus.setVisibility(View.GONE);
         GlideApp.with(this)
                 .load(url)
                 .into(imgProfile);
         imgProfile.setColorFilter(ContextCompat.getColor(this, android.R.color.transparent));
         tvName.setText(name);
-//        frameLayout.setVisibility(View.VISIBLE);
     }
 
     private void loadProfileDefault() {
-        GlideApp.with(this).load(R.drawable.frame)
+        GlideApp.with(this)
+                .load(R.drawable.frame)
                 .into(imgFrame);
     }
 
@@ -256,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         frameLayout.buildDrawingCache();
         Bitmap cache = frameLayout.getDrawingCache();
         try {
-            String path = Environment.getExternalStorageDirectory() + "/" + fileName + ".png";
+            String path = Environment.getExternalStorageDirectory() + "/" + fileName + ".jpg";
             FileOutputStream fileOutputStream = new FileOutputStream(path);
             cache.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             fileOutputStream.flush();
@@ -271,7 +269,8 @@ public class MainActivity extends AppCompatActivity {
             //Add text and then Image URI
             shareIntent.putExtra(Intent.EXTRA_TEXT, "Thats it..");
             shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-            shareIntent.setType("image/png");
+//            shareIntent.putExtra("jid", phone);
+            shareIntent.setType("image/jpg");
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             try {
