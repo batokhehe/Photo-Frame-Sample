@@ -8,10 +8,77 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <RelativeLayout
+        android:id="@+id/form_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/etPhone"
+            android:background="@drawable/shape_rect_outline"
+            android:hint="Name"
+            android:imeOptions="actionNext"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/etAge"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_rect_outline"
+            android:hint="No. Telp/ WA"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_rect_outline"
+            android:hint="Umur"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etAge"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/holo_blue_dark"
+            android:drawableEnd="@drawable/ic_keyboard_arrow_right"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="NEXT"
+            android:textColor="@android:color/white" />
+
+
+    </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,7 +89,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/img_profile"
+                android:id="@+id/ivProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -33,7 +100,7 @@
                 android:scrollbars="vertical" />
 
             <ImageView
-                android:id="@+id/img_frame"
+                android:id="@+id/ivFrame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -44,10 +111,10 @@
                 android:id="@+id/dummy_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/img_frame" />
+                android:layout_below="@+id/ivFrame" />
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/dummy_view"
@@ -63,28 +130,38 @@
 
     </FrameLayout>
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/img_plus"
-        android:layout_width="@dimen/ic_plus_width"
-        android:layout_height="@dimen/ic_plus_width"
-        android:layout_marginTop="15dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_plus"
-        app:civ_shadow="true"
-        app:civ_shadow_radius="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/img_save"
-        android:layout_width="@dimen/ic_plus_width"
-        android:layout_height="@dimen/ic_plus_width"
-        android:layout_marginTop="15dp"
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_save"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="30dp"
+        android:background="@android:color/holo_blue_dark"
+        android:drawableStart="@drawable/ic_keyboard_arrow_left"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:text="BACK"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@android:color/holo_blue_dark"
+        android:drawableEnd="@drawable/ic_keyboard_arrow_right"
+        android:gravity="center"
+        android:paddingEnd="10dp"
+        android:text="CONTINUE"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

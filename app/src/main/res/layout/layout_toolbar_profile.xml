@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/img_profile"
+            android:id="@+id/ivProfile"
             android:layout_width="@dimen/toolbar_profile_width"
             android:layout_height="@dimen/toolbar_profile_width"
             android:layout_marginTop="@dimen/activity_padding"
@@ -25,7 +25,7 @@
             android:id="@+id/img_plus"
             android:layout_width="@dimen/ic_plus_width"
             android:layout_height="@dimen/ic_plus_width"
-            android:layout_alignBottom="@id/img_profile"
+            android:layout_alignBottom="@id/ivProfile"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_plus"
             app:civ_shadow="true"

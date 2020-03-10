@@ -12,9 +12,11 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,20 +44,35 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final int REQUEST_IMAGE = 100;
 
-    @BindView(R.id.img_profile)
+
+    @BindView(R.id.ivProfile)
     ImageView imgProfile;
-    @BindView(R.id.img_frame)
+    @BindView(R.id.ivFrame)
     ImageView imgFrame;
-    @BindView(R.id.tv_name)
+    @BindView(R.id.tvName)
     TextView tvName;
 
-    @BindView(R.id.img_plus)
-    ImageView imgPlus;
-    @BindView(R.id.img_save)
-    ImageView imgSave;
+    @BindView(R.id.btnBack)
+    Button btnBack;
+    @BindView(R.id.btnContinue)
+    Button btnContinue;
 
     @BindView(R.id.frame_layout)
     FrameLayout frameLayout;
+    @BindView(R.id.etName)
+    EditText etName;
+    @BindView(R.id.etPhone)
+    EditText etPhone;
+    @BindView(R.id.etAge)
+    EditText etAge;
+    @BindView(R.id.btnNext)
+    Button btnNext;
+    @BindView(R.id.form_layout)
+    RelativeLayout formLayout;
+    @BindView(R.id.dummy_view)
+    View dummyView;
+
+    private String name, phone, age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(null);
 
         loadProfileDefault();
+        setFormLayout(true);
 
         // Clearing older images from cache directory
         // don't call this line if you want to choose multiple images in the same activity
@@ -83,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 .load(url)
                 .into(imgProfile);
         imgProfile.setColorFilter(ContextCompat.getColor(this, android.R.color.transparent));
+        tvName.setText(name);
 //        frameLayout.setVisibility(View.VISIBLE);
     }
 
@@ -91,8 +110,16 @@ public class MainActivity extends AppCompatActivity {
                 .into(imgFrame);
     }
 
-    @OnClick({R.id.img_plus})
-    void onProfileImageClick() {
+    @OnClick({R.id.btnBack})
+    void onBackClick() {
+        setFormLayout(true);
+    }
+
+    @OnClick({R.id.btnNext})
+    void onNextClick() {
+        name = etName.getText().toString();
+        phone = etPhone.getText().toString();
+        age = etAge.getText().toString();
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .withListener(new MultiplePermissionsListener() {
@@ -170,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // loading profile image from local cache
                     if (uri != null) {
+                        setFormLayout(false);
                         loadProfile(uri.toString());
                     }
                 } else {
@@ -179,8 +207,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.tv_name)
-    void setName(){
+    private void setFormLayout(boolean visibility) {
+        formLayout.setVisibility(visibility ? View.VISIBLE : View.GONE);
+
+        frameLayout.setVisibility(!visibility ? View.VISIBLE : View.GONE);
+        btnContinue.setVisibility(!visibility ? View.VISIBLE : View.GONE);
+        btnBack.setVisibility(!visibility ? View.VISIBLE : View.GONE);
+    }
+
+    @OnClick(R.id.tvName)
+    void setName() {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
         View view = layoutInflaterAndroid.inflate(R.layout.dialog_name, null);
 
@@ -209,8 +245,8 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    @OnClick({R.id.img_save})
-    void saveImage(){
+    @OnClick({R.id.btnContinue})
+    void saveImage() {
         Calendar calendar = Calendar.getInstance();
         String fileName = String.valueOf(calendar.getTimeInMillis());
 
@@ -220,11 +256,29 @@ public class MainActivity extends AppCompatActivity {
         frameLayout.buildDrawingCache();
         Bitmap cache = frameLayout.getDrawingCache();
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream( Environment.getExternalStorageDirectory() + "/" + fileName + ".png");
+            String path = Environment.getExternalStorageDirectory() + "/" + fileName + ".png";
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
             cache.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
             Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT).show();
+
+            Uri imageUri = Uri.parse(path);
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            //Target whatsapp:
+            shareIntent.setPackage("com.whatsapp");
+            //Add text and then Image URI
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Thats it..");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            shareIntent.setType("image/png");
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            try {
+                startActivity(shareIntent);
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             // TODO: handle exception
             Toast.makeText(this, "Something somewhere", Toast.LENGTH_SHORT).show();
