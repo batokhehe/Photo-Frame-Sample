@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnNext;
     @BindView(R.id.form_layout)
     RelativeLayout formLayout;
-    @BindView(R.id.dummy_view)
-    View dummyView;
 
     private String name, phone, age;
 
