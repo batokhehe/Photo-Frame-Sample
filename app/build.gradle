@@ -51,4 +51,7 @@ dependencies {
 
     //ucrop
     implementation 'com.github.yalantis:ucrop:2.2.4-native'
+
+    //Custom Edittext
+    implementation 'com.agilie:rotatable-autofit-edittext:1.2'
 }

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/et_name"
-        style="@style/et_name"/>
+        android:id="@+id/et_resize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input Size"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
 </LinearLayout>

@@ -10,4 +10,10 @@
     <dimen name="meta_label">12dp</dimen>
     <dimen name="dimen_40dp">40dp</dimen>
     <dimen name="ic_plus_width">28dp</dimen>
+
+
+    <dimen name="autoresize_min_width">200dp</dimen>
+    <dimen name="autoresize_max_width">300dp</dimen>
+    <dimen name="autoresize_max_text_size">20sp</dimen>
+    <dimen name="autoresize_min_text_size">14sp</dimen>
 </resources>

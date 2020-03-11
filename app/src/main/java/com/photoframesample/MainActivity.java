@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout formLayout;
 
     private String name, phone, age;
+    private int _xDelta;
+    private int _yDelta;
+    private Float size = 18F;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,29 +209,64 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFormLayout(boolean visibility) {
         formLayout.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        if (visibility) tvName.setOnTouchListener(null);
 
         frameLayout.setVisibility(!visibility ? View.VISIBLE : View.GONE);
         btnContinue.setVisibility(!visibility ? View.VISIBLE : View.GONE);
         btnBack.setVisibility(!visibility ? View.VISIBLE : View.GONE);
+        if(!visibility) {
+            tvName.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    final int X = (int) motionEvent.getRawX();
+                    final int Y = (int) motionEvent.getRawY();
+                    switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_DOWN:
+                            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                            _xDelta = X - lParams.leftMargin;
+                            _yDelta = Y - lParams.topMargin;
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            resize();
+                            break;
+                        case MotionEvent.ACTION_POINTER_DOWN:
+                            break;
+                        case MotionEvent.ACTION_POINTER_UP:
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                            layoutParams.leftMargin = X - _xDelta;
+                            layoutParams.topMargin = Y - _yDelta;
+                            layoutParams.rightMargin = -100;
+                            layoutParams.bottomMargin = -100;
+                            view.setLayoutParams(layoutParams);
+                            break;
+                    }
+                    tvName.invalidate();
+                    return true;
+                }
+            });
+        }
     }
 
     @OnClick(R.id.tvName)
-    void setName() {
+    void resize() {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
         View view = layoutInflaterAndroid.inflate(R.layout.dialog_name, null);
 
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(this);
         alertDialogBuilderUserInput.setView(view);
 
-        EditText etName = view.findViewById(R.id.et_name);
-        etName.requestFocus();
+        EditText etResize = view.findViewById(R.id.et_resize);
+        etResize.setText(String.valueOf(size));
+        etResize.requestFocus();
 
         alertDialogBuilderUserInput
                 .setCancelable(false)
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
-                        String name = etName.getText().toString();
-                        tvName.setText(name);
+                        size = Float.valueOf(etResize.getText().toString());
+                        tvName.setTextSize(size);
                     }
                 })
                 .setNegativeButton("Cancel",

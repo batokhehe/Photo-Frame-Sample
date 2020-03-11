@@ -106,35 +106,52 @@
                 android:adjustViewBounds="true" />
 
             <TextView
-                android:id="@+id/tvWatermark"
+                android:id="@+id/tvWatermark1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:alpha="0.7"
+                android:layout_above="@id/tvWatermark2"
+                android:alpha="0.8"
                 android:gravity="center_horizontal"
                 android:text="FOR TESTING PURPOSE"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <!--            <View-->
-            <!--                android:id="@+id/dummy_view"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_below="@+id/ivFrame" />-->
+            <TextView
+                android:id="@+id/tvWatermark2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:alpha="0.8"
+                android:gravity="center_horizontal"
+                android:text="FOR TESTING PURPOSE"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWatermark3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvWatermark2"
+                android:layout_centerInParent="true"
+                android:alpha="0.8"
+                android:gravity="center_horizontal"
+                android:text="FOR TESTING PURPOSE"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="260dp"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/tvWatermark"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="2dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvWatermark3"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/gt_pressura_bold"
-                android:gravity="center_horizontal"
-                android:maxLines="2"
-                android:paddingTop="75dp"
+                android:gravity="center"
+                android:lineSpacingExtra="0pt"
+                android:lineSpacingMultiplier="0.8"
                 android:textColor="#0E498E"
                 android:textSize="18sp" />
 
